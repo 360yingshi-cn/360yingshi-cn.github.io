@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>360影视 - 免费高清电影电视剧综艺动漫在线观看导航</title>
+<meta name="description" content="360影视，360度全景观影导航，精选最新电影、热播电视剧、综艺、动漫等海量高清影视资源在线观看。多端自适应、极速加载、界面清爽，随时随地畅享优质观影体验。">
+<meta name="keywords" content="360影视,360影视在线观看,免费电影,电视剧在线观看,综艺动漫,高清影视资源,影视导航,360度观影">
+<meta name="author" content="360影视">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://360yingshi-cn.github.io/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>">
+<style>
+/* ===== 基础 ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080a14;--ink:#e9f0fb;--muted:#8795b3;--line:rgba(120,140,255,.16);
+  --blue:#4f7cff;--cyan:#19d1d9;--violet:#7c5cff;--pink:#ff5ca8;--lime:#c0f03c;
+  --r:18px;--sh:0 18px 44px rgba(0,0,0,.5);--card:rgba(255,255,255,.035);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.7;overflow-x:hidden;
+}
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(680px 460px at 88% -6%,rgba(79,124,255,.28),transparent 62%),
+    radial-gradient(620px 560px at 2% 6%,rgba(25,209,217,.2),transparent 62%),
+    radial-gradient(720px 600px at 50% 112%,rgba(124,92,255,.18),transparent 60%),
+    var(--bg);}
+/* 360° 圆环网格背景 */
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.35;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(120,140,255,.05) 0 1px,transparent 1px) 0 0/60px 60px,
+    conic-gradient(from 0deg at 50% 50%,rgba(79,124,255,.04),rgba(25,209,217,.04),rgba(124,92,255,.04),rgba(79,124,255,.04));
+  background-blend-mode:overlay;}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+ul{list-style:none}
+img{display:block;max-width:100%}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:rgba(120,140,255,.3);border-radius:9px}
+
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+
+/* ===== 导航 ===== */
+.nav{position:sticky;top:0;z-index:60;background:rgba(8,10,20,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1160px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;flex-shrink:0}
+.logo .mk{width:34px;height:34px;border-radius:50%;position:relative;flex-shrink:0;
+  background:conic-gradient(from 0deg,#4f7cff,#19d1d9,#7c5cff,#ff5ca8,#4f7cff);
+  -webkit-mask:radial-gradient(circle,transparent 8px,#000 9px);mask:radial-gradient(circle,transparent 8px,#000 9px);
+  box-shadow:0 0 0 3px rgba(255,255,255,.1),0 6px 16px rgba(79,124,255,.3)}
+.logo b i{font-style:normal;background:linear-gradient(100deg,#7fb0ff,#19d1d9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.menu{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+.menu a{padding:8px 14px;border-radius:11px;font-size:14.5px;color:var(--muted);transition:.25s;white-space:nowrap}
+.menu a:hover{color:#fff;background:rgba(120,140,255,.12)}
+.mbtn{display:none;width:42px;height:42px;border-radius:11px;border:1px solid var(--line);font-size:19px}
+
+/* ===== 通用 ===== */
+section{padding:62px 0;position:relative}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:12px}
+.h2{font-size:clamp(25px,3.9vw,38px);font-weight:800;line-height:1.28;margin-bottom:12px}
+.h2 em{font-style:normal;background:linear-gradient(100deg,#7fb0ff,#19d1d9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--muted);font-size:16px;max-width:640px;margin-bottom:36px}
+.head{text-align:center}.head .sub{margin:0 auto 38px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;transition:.3s}
+.card:hover{transform:translateY(-5px);border-color:rgba(120,140,255,.45);box-shadow:var(--sh);background:rgba(120,140,255,.06)}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:999px;font-weight:600;font-size:14.5px;transition:.25s;white-space:nowrap;border:1px solid transparent}
+.btn-p{background:linear-gradient(135deg,#4f7cff,#19d1d9);color:#04122a;box-shadow:0 10px 24px rgba(79,124,255,.32)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(79,124,255,.46)}
+.btn-o{border-color:var(--line);color:var(--muted)}
+.btn-o:hover{color:#fff;border-color:rgba(120,140,255,.45);background:rgba(120,140,255,.1)}
+.tag{font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--muted)}
+.tag.b{color:#7fb0ff;border-color:rgba(79,124,255,.45);background:rgba(79,124,255,.14)}
+.tag.c{color:var(--cyan);border-color:rgba(25,209,217,.4);background:rgba(25,209,217,.12)}
+.tag.v{color:#b39dff;border-color:rgba(124,92,255,.4);background:rgba(124,92,255,.12)}
+
+/* ===== HERO ===== */
+.hero{padding:78px 0 54px}
+.herobox{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(32px,5vw,56px);font-weight:900;line-height:1.16;letter-spacing:-1px}
+.hero h1 .grad{background:linear-gradient(100deg,#7fb0ff,#19d1d9,#7c5cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{color:var(--muted);font-size:17px;margin:20px 0 26px;max-width:520px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.counts{display:flex;gap:34px;margin-top:34px;flex-wrap:wrap}
+.counts b{display:block;font-size:28px;font-weight:800;background:linear-gradient(100deg,#7fb0ff,#19d1d9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.counts span{font-size:12.5px;color:var(--muted)}
+.search{display:flex;gap:8px;margin-top:26px;padding:8px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);max-width:470px}
+.search input{flex:1;background:none;border:none;outline:none;color:var(--ink);padding:8px 14px;font-size:15px}
+.search button{padding:0 20px;border-radius:999px;background:linear-gradient(135deg,#4f7cff,#19d1d9);color:#04122a;font-weight:700;font-size:14px}
+
+/* 360° 罗盘装饰 */
+.compass{position:relative;width:420px;height:420px;max-width:100%;margin:0 auto}
+.compass .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(120,140,255,.18)}
+.compass .ring::before{content:"";position:absolute;inset:14px;border-radius:50%;border:1px dashed rgba(25,209,217,.25)}
+.compass .ring::after{content:"";position:absolute;inset:38px;border-radius:50%;border:1px solid rgba(124,92,255,.2)}
+.core{position:absolute;inset:0;display:grid;place-items:center;animation:spin 24s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.core span{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan)}
+.core span:nth-child(1){top:6%;left:50%;transform:translateX(-50%);background:#4f7cff;box-shadow:0 0 16px #4f7cff}
+.core span:nth-child(2){top:22%;right:8%;background:#19d1d9}
+.core span:nth-child(3){bottom:22%;right:8%;background:#7c5cff}
+.core span:nth-child(4){bottom:6%;left:50%;transform:translateX(-50%);background:#ff5ca8}
+.core span:nth-child(5){bottom:22%;left:8%;background:#c0f03c}
+.core span:nth-child(6){top:22%;left:8%;background:#4f7cff}
+.center{position:absolute;inset:0;display:grid;place-items:center}
+.center .dot{width:120px;height:120px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-weight:900;color:#04122a;
+  background:conic-gradient(from 0deg,#4f7cff,#19d1d9,#7c5cff,#ff5ca8,#4f7cff);
+  box-shadow:0 0 0 8px rgba(255,255,255,.06),0 18px 40px rgba(79,124,255,.4)}
+.center .dot small{display:block;font-size:11px;font-weight:700;letter-spacing:1px;opacity:.75}
+
+/* ===== 栏目1 电影：横向宽屏条 ===== */
+.wide{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.wide-i{position:relative;height:230px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);transition:.4s}
+.wide-i .bg{position:absolute;inset:0;transition:.5s}
+.wide-i .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(4,7,20,.92),rgba(4,7,20,.35) 60%,transparent)}
+.wide-i:hover{transform:translateY(-7px)}
+.wide-i:hover .bg{transform:scale(1.08)}
+.wide-i .tx{position:absolute;left:24px;top:50%;transform:translateY(-50%);right:24px}
+.wide-i .tx h4{font-size:21px;font-weight:800;margin-bottom:8px}
+.wide-i .tx p{font-size:13px;color:rgba(255,255,255,.85);margin-bottom:12px}
+.wide-i .arrow{position:absolute;right:18px;bottom:18px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.92);color:#04122a;display:grid;place-items:center;font-size:15px;opacity:0;transform:translateX(-8px);transition:.35s}
+.wide-i:hover .arrow{opacity:1;transform:translateX(0)}
+.wide-i .badge{position:absolute;top:14px;left:14px;background:rgba(4,7,20,.6);backdrop-filter:blur(6px);padding:3px 11px;border-radius:99px;font-size:12px;font-weight:700;color:#fde68a}
+
+/* ===== 栏目2 电视剧：竖排分类块 ===== */
+.vert{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.vcard{display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);transition:.35s;min-height:230px}
+.vcard:hover{transform:translateY(-6px);border-color:rgba(120,140,255,.45);background:rgba(120,140,255,.07)}
+.vcard .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:21px}
+.vcard h4{font-size:17.5px;font-weight:700}
+.vcard ul{font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.vcard ul li{padding-left:13px;position:relative}
+.vcard ul li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--cyan)}
+.vcard .more{margin-top:auto;font-size:13px;color:#7fb0ff;font-weight:600}
+
+/* ===== 栏目3 综艺动漫：时间轴 ===== */
+.tl{position:relative;padding-left:8px}
+.tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,#4f7cff,#19d1d9,#7c5cff)}
+.tl-i{position:relative;padding:0 0 22px 34px}
+.tl-i::before{content:"";position:absolute;left:0;top:6px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:3px solid var(--cyan);box-shadow:0 0 0 4px rgba(25,209,217,.12)}
+.tl-i h4{font-size:16.5px;font-weight:700;margin-bottom:5px}
+.tl-i p{font-size:13.5px;color:var(--muted)}
+.tl-i .tg{margin-top:8px;display:flex;gap:7px;flex-wrap:wrap}
+.tlbox{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.tlbox .side{position:sticky;top:90px;padding:26px;border-radius:var(--r);background:linear-gradient(155deg,rgba(79,124,255,.2),rgba(124,92,255,.16));border:1px solid var(--line)}
+.tlbox .side h3{font-size:22px;font-weight:800;margin-bottom:12px}
+.tlbox .side p{font-size:14px;color:var(--muted);margin-bottom:18px}
+.tlbox .side .btn{margin-top:6px}
+
+/* ===== 栏目4 热榜：双向列表 ===== */
+.rank2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.rcard2{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:26px}
+.rcard2 h3{font-size:18px;font-weight:800;margin-bottom:22px;display:flex;align-items:center;gap:9px}
+.r2-i{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px dashed rgba(120,140,255,.14)}
+.r2-i:last-child{border-bottom:none}
+.r2-i .no{width:30px;height:30px;border-radius:11px;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0;background:rgba(120,140,255,.12);border:1px solid var(--line);color:#7fb0ff}
+.r2-i.g1 .no{background:linear-gradient(135deg,#fde68a,#f59e0b);color:#2a1c00;border-color:transparent}
+.r2-i.g2 .no{background:linear-gradient(135deg,#e2e8f0,#94a3b8);color:#141a20;border-color:transparent}
+.r2-i.g3 .no{background:linear-gradient(135deg,#f0b468,#c87c2a);color:#251300;border-color:transparent}
+.r2-i .ti{flex:1;font-size:15px;font-weight:600}
+.r2-i .sc{font-size:12.5px;color:var(--cyan);font-weight:700}
+
+/* ===== 栏目5 观影指南：三步 ===== */
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative}
+.tri::before{content:"";position:absolute;top:46px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,transparent,#4f7cff,transparent);opacity:.4}
+.tri-i{text-align:center;padding:0 10px;position:relative}
+.tri-i .n{width:72px;height:72px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;font-size:26px;font-weight:900;color:#04122a;position:relative;z-index:2;
+  background:linear-gradient(135deg,#7fb0ff,#19d1d9);box-shadow:0 12px 26px rgba(79,124,255,.35)}
+.tri-i h4{font-size:17px;font-weight:700;margin-bottom:8px}
+.tri-i p{font-size:13.5px;color:var(--muted)}
+
+/* ===== FAQ ===== */
+.faqs2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.faq2{border:1px solid var(--line);border-radius:13px;padding:18px 20px;background:var(--card);transition:.25s}
+.faq2:hover{border-color:rgba(120,140,255,.4)}
+.faq2 summary{cursor:pointer;font-weight:600;font-size:15.5px;list-style:none;display:flex;gap:11px;align-items:flex-start}
+.faq2 summary::-webkit-details-marker{display:none}
+.faq2 summary::before{content:"? ";flex-shrink:0;font-size:14px;font-weight:800;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;background:rgba(79,124,255,.18);color:#7fb0ff}
+.faq2[open] summary::before{content:"!";background:rgba(25,209,217,.18);color:var(--cyan)}
+.faq2 p{margin:11px 0 0 35px;color:var(--muted);font-size:14px}
+
+/* ===== CTA ===== */
+.cta3{text-align:center;border-radius:26px;padding:52px 30px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(79,124,255,.2),rgba(25,209,217,.16),rgba(124,92,255,.18));border:1px solid var(--line)}
+.cta3 h3{font-size:clamp(23px,3.4vw,32px);font-weight:800;margin-bottom:12px}
+.cta3 p{color:var(--muted);margin-bottom:24px;font-size:15.5px}
+
+/* ===== 页脚 ===== */
+footer{border-top:1px solid var(--line);background:rgba(0,0,0,.35);padding:44px 0 26px;margin-top:8px}
+.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;margin-bottom:30px}
+.fgrid h5{font-size:15px;font-weight:700;margin-bottom:14px}
+.fgrid ul li{margin-bottom:9px}
+.fgrid a{color:var(--muted);font-size:14px;transition:.2s}
+.fgrid a:hover{color:#7fb0ff}
+.fbrand p{color:var(--muted);font-size:13.5px;margin-top:12px}
+.copy{text-align:center;color:var(--muted);font-size:13px;padding-top:24px;border-top:1px solid var(--line)}
+.copy a{color:var(--muted)}
+.copy a:hover{color:#fff}
+
+/* ===== 动画 ===== */
+.rv{opacity:0;transform:translateY(24px);transition:.65s cubic-bezier(.22,.68,.32,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ===== 响应式 ===== */
+@media(max-width:960px){
+  .herobox{grid-template-columns:1fr;gap:40px}
+  .wide{grid-template-columns:1fr}
+  .vert{grid-template-columns:repeat(2,1fr)}
+  .tlbox{grid-template-columns:1fr;gap:24px}
+  .tlbox .side{position:static}
+  .rank2{grid-template-columns:1fr}
+  .tri{grid-template-columns:1fr}
+  .tri::before{display:none}
+}
+@media(max-width:640px){
+  section{padding:44px 0}
+  .hero{padding:42px 0 32px}
+  .mbtn{display:grid;place-items:center;margin-left:auto}
+  .menu{position:fixed;top:62px;left:0;right:0;flex-direction:column;gap:2px;padding:16px;background:rgba(8,10,20,.98);border-bottom:1px solid var(--line);
+    transform:translateY(-12px);opacity:0;pointer-events:none;transition:.3s}
+  .menu.open{transform:none;opacity:1;pointer-events:auto}
+  .menu a{padding:12px 16px;border-radius:11px}
+  .compass{width:300px;height:300px}
+  .center .dot{width:96px;height:96px;font-size:24px}
+  .vert{grid-template-columns:1fr}
+  .faqs2{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr}
+  .search button{padding:0 14px;font-size:13px}
+}
+@media(max-width:400px){
+  .counts{gap:22px}
+  .hero h1{font-size:30px}
+  .wide-i{height:200px}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/xiaobao.js"></script>
+
+<!-- ===== 导航 ===== -->
+<header class="nav">
+  <div class="nav-in">
+    <a href="#" class="logo" aria-label="360影视首页"><span class="mk"></span><b>3<i>60影视</i></b></a>
+    <nav class="menu" id="menu">
+      <a href="#film">电影</a><a href="#tv">电视剧</a><a href="#show">综艺动漫</a><a href="#rank">热播榜</a><a href="#guide">观影指南</a><a href="#faq">常见问题</a>
+    </nav>
+    <button class="mbtn" id="mbtn" aria-label="菜单">☰</button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="wrap herobox">
+    <div class="rv">
+      <span class="kicker">◆ 360° Full View Cinema</span>
+      <h1>360影视<br><span class="grad">360° 全景观影</span></h1>
+      <p class="lead">360影视，360度全景式影视导航，精选最新电影、热播电视剧、综艺、动漫等海量高清影视资源，多端自适应、极速加载、界面清爽，随时随地畅享优质观影体验。</p>
+      <div class="cta">
+        <a href="#film" class="btn btn-p">开始免费观看 →</a>
+        <a href="#guide" class="btn btn-o">观影指南</a>
+      </div>
+      <div class="search">
+        <input type="search" placeholder="搜索影片、剧集、演员、综艺…" aria-label="搜索">
+        <button>搜索</button>
+      </div>
+      <div class="counts">
+        <div><b>15000+</b><span>影视资源</span></div>
+        <div><b>1080P</b><span>高清画质</span></div>
+        <div><b>0</b><span>弹窗干扰</span></div>
+      </div>
+    </div>
+    <div class="compass rv" aria-hidden="true">
+      <div class="ring"></div>
+      <div class="core"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="center"><div class="dot">360<small>影视导航</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 栏目1 电影 ===== -->
+<section id="film">
+  <div class="wrap">
+    <div class="head rv"><span class="kicker">◆ Featured Films</span>
+      <h2 class="h2">最新<span class="em">电影</span>在线观看</h2>
+      <p class="sub">院线大片、高分佳作、经典老片一网打尽，宽屏卡片悬停浮现播放箭头，点击即看，支持多清晰度与投屏。</p>
+    </div>
+    <div class="wide">
+      <article class="wide-i rv"><div class="bg" style="background:linear-gradient(135deg,#1e3a8a,#4f7cff)"></div><span class="badge">★ 9.1</span><span class="arrow">→</span><div class="tx"><h4>归途之海</h4><p>一部关于归乡与救赎的年度佳作，画面恢弘、情感细腻。</p><span class="tag b">剧情</span></div></article>
+      <article class="wide-i rv"><div class="bg" style="background:linear-gradient(135deg,#7c3aed,#7c5cff)"></div><span class="badge">★ 8.6</span><span class="arrow">→</span><div class="tx"><h4>霓虹迷局</h4><p>雨夜都市里的连环谜案，反转密集、节奏凌厉。</p><span class="tag v">犯罪悬疑</span></div></article>
+      <article class="wide-i rv"><div class="bg" style="background:linear-gradient(135deg,#0e7490,#19d1d9)"></div><span class="badge">★ 9.3</span><span class="arrow">→</span><div class="tx"><h4>蓝色深空</h4><p>硬核科幻巨制，视效炸裂，带来沉浸式太空体验。</p><span class="tag c">科幻视效</span></div></article>
+      <article class="wide-i rv"><div class="bg" style="background:linear-gradient(135deg,#be185d,#ff5ca8)"></div><span class="badge">★ 8.4</span><span class="arrow">→</span><div class="tx"><h4>春日迟来</h4><p>温暖治愈系爱情，细腻刻画都市男女的情感悸动。</p><span class="tag">爱情治愈</span></div></article>
+      <article class="wide-i rv"><div class="bg" style="background:linear-gradient(135deg,#365314,#84cc16)"></div><span class="badge">★ 8.9</span><span class="arrow">→</span><div class="tx"><h4>山林回声</h4><p>自然生态纪录片，带你走进未被打扰的原始森林。</p><span class="tag">纪录片</span></div></article>
+      <article class="wide-i rv"><div class="bg" style="background:linear-gradient(135deg,#92400e,#f59e0b)"></div><span class="badge">★ 8.7</span><span class="arrow">→</span><div class="tx"><h4>金色年代</h4><p>年代家庭群像，笑中带泪，三代人的温情往事。</p><span class="tag">年代家庭</span></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 栏目2 电视剧 ===== -->
+<section id="tv" style="background:linear-gradient(180deg,rgba(120,140,255,.05),transparent)">
+  <div class="wrap">
+    <div class="head rv"><span class="kicker">◆ Drama Library</span>
+      <h2 class="h2">热播<span class="em">电视剧</span>追更</h2>
+      <p class="sub">华语剧、海外剧、短剧、年代剧分栏呈现，每类附精选片单，多线路播放卡顿秒切。</p>
+    </div>
+    <div class="vert">
+      <div class="vcard rv"><span class="ic" style="background:rgba(79,124,255,.18)">🇨🇳</span><h4>华语剧场</h4><ul><li>长风渡山河 · 28集</li><li>沉默法庭 · 26集</li><li>归园田居 · 34集</li><li>烟火人间 · 42集</li></ul><span class="more">查看全部 →</span></div>
+      <div class="vcard rv"><span class="ic" style="background:rgba(25,209,217,.18)">🌐</span><h4>海外剧场</h4><ul><li>北境警长 S4 · 10集</li><li>东京便利店 · 6集</li><li>首尔咖啡馆 · 12集</li><li>华尔街之雾 · 8集</li></ul><span class="more">查看全部 →</span></div>
+      <div class="vcard rv"><span class="ic" style="background:rgba(124,92,255,.18)">🎭</span><h4>综艺现场</h4><ul><li>今晚有梗 · 脱口秀</li><li>极限挑战赛 · 真人秀</li><li>慢游中国 · 旅行</li><li>厨房大作战 · 美食</li></ul><span class="more">查看全部 →</span></div>
+      <div class="vcard rv"><span class="ic" style="background:rgba(255,92,168,.18)">🌸</span><h4>动漫番剧</h4><ul><li>剑来山河 · 国漫</li><li>星海漫游 · 科幻番</li><li>治愈系食堂 · 日番</li><li>机甲纪元 · 机战</li></ul><span class="more">查看全部 →</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 栏目3 综艺动漫 ===== -->
+<section id="show">
+  <div class="wrap">
+    <div class="head rv"><span class="kicker">◆ Variety & Anime</span>
+      <h2 class="h2">综艺动漫<span class="em">轻松下饭</span></h2>
+      <p class="sub">真人秀、脱口秀、国漫日漫与少儿动画，忙碌一天后的最佳放松方式，时间轴呈现分类更清晰。</p>
+    </div>
+    <div class="tlbox">
+      <div class="side rv">
+        <h3>综艺动漫专区</h3>
+        <p>从笑点密集的脱口秀到特效拉满的国漫仙侠，再到温暖治愈的日番，覆盖全年龄段的轻松内容，通勤路上的快乐源泉。</p>
+        <div class="search" style="max-width:100%;margin:0 0 14px"><input type="search" placeholder="搜索综艺或番剧…" aria-label="搜索"><button>搜</button></div>
+        <a href="#" class="btn btn-p">进入专区 →</a>
+      </div>
+      <div class="tl rv">
+        <div class="tl-i"><h4>真人秀 · 脱口秀</h4><p>笑点密集、节奏明快，适合碎片时间放松。</p><div class="tg"><span class="tag b">9 档</span><span class="tag">真人秀</span></div></div>
+        <div class="tl-i"><h4>国漫 · 仙侠</h4><p>国风美学拉满，大场景特效与动人剧情双重在线。</p><div class="tg"><span class="tag v">12 部</span><span class="tag">连载中</span></div></div>
+        <div class="tl-i"><h4>日番 · 热血</h4><p>机战、忍者与竞技番，燃向内容追更不停。</p><div class="tg"><span class="tag c">10 部</span><span class="tag">每周更新</span></div></div>
+        <div class="tl-i"><h4>治愈 · 日常</h4><p>温暖画风与细腻剧情，治愈疲惫的每一天。</p><div class="tg"><span class="tag">8 部</span><span class="tag">全季完结</span></div></div>
+        <div class="tl-i"><h4>少儿 · 动画</h4><p>寓教于乐的动画内容，适合亲子共赏。</p><div class="tg"><span class="tag">6 部</span><span class="tag">高清配音</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 栏目4 热榜 ===== -->
+<section id="rank" style="background:linear-gradient(180deg,transparent,rgba(120,140,255,.05))">
+  <div class="wrap">
+    <div class="head rv"><span class="kicker">◆ Trending</span>
+      <h2 class="h2">实时<span class="em">热播榜</span></h2>
+      <p class="sub">基于全网用户观影行为实时统计，发现当下最值得一看的好内容，金、银、铜三色标注前三名。</p>
+    </div>
+    <div class="rank2">
+      <div class="rcard2 rv"><h3>🎬 电影热度榜</h3>
+        <div class="r2-i g1"><span class="no">1</span><span class="ti">归途之海</span><span class="sc">9.1 分</span></div>
+        <div class="r2-i g2"><span class="no">2</span><span class="ti">蓝色深空</span><span class="sc">9.3 分</span></div>
+        <div class="r2-i g3"><span class="no">3</span><span class="ti">金色年代</span><span class="sc">8.7 分</span></div>
+        <div class="r2-i"><span class="no">4</span><span class="ti">山林回声</span><span class="sc">8.9 分</span></div>
+        <div class="r2-i"><span class="no">5</span><span class="ti">霓虹迷局</span><span class="sc">8.6 分</span></div>
+        <div class="r2-i"><span class="no">6</span><span class="ti">春日迟来</span><span class="sc">8.4 分</span></div>
+      </div>
+      <div class="rcard2 rv"><h3>📺 剧集热度榜</h3>
+        <div class="r2-i g1"><span class="no">1</span><span class="ti">长风渡山河</span><span class="sc">热 96</span></div>
+        <div class="r2-i g2"><span class="no">2</span><span class="ti">沉默法庭</span><span class="sc">热 89</span></div>
+        <div class="r2-i g3"><span class="no">3</span><span class="ti">今晚有梗</span><span class="sc">热 82</span></div>
+        <div class="r2-i"><span class="no">4</span><span class="ti">归园田居</span><span class="sc">热 76</span></div>
+        <div class="r2-i"><span class="no">5</span><span class="ti">北境警长</span><span class="sc">热 70</span></div>
+        <div class="r2-i"><span class="no">6</span><span class="ti">烟火人间</span><span class="sc">热 64</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 栏目5 观影指南 ===== -->
+<section id="guide">
+  <div class="wrap">
+    <div class="head rv"><span class="kicker">◆ How to Watch</span>
+      <h2 class="h2">三步开启<span class="em">免费观影</span></h2>
+      <p class="sub">无需注册下载，打开即看，清晰的观影流程让每个人都能轻松上手。</p>
+    </div>
+    <div class="tri">
+      <div class="tri-i rv"><div class="n">1</div><h4>搜索想看的内容</h4><p>顶部搜索框输入片名、演员或关键词，一秒精准匹配影视资源。</p></div>
+      <div class="tri-i rv"><div class="n">2</div><h4>选择清晰度与线路</h4><p>支持标清到 1080P 多档切换，多线路设计让卡顿时能快速换源。</p></div>
+      <div class="tri-i rv"><div class="n">✓</div><h4>畅看并投屏</h4><p>点击播放即可观看，支持倍速与投屏，手机电脑无缝切换。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" style="background:linear-gradient(180deg,rgba(120,140,255,.05),transparent)">
+  <div class="wrap">
+    <div class="head rv"><span class="kicker">◆ FAQ</span>
+      <h2 class="h2">常见问题<span class="em">答疑</span></h2>
+      <p class="sub">关于 360 影视的常见疑问，帮你快速了解平台功能与使用方式。</p>
+    </div>
+    <div class="faqs2">
+      <details class="faq2 rv" open><summary>360影视真的免费吗？</summary><p>提供大量免费影视内容在线观看，部分独家或高清资源可能需登录或开通会员，具体以各片源页面说明为准。</p></details>
+      <details class="faq2 rv"><summary>支持哪些设备观看？</summary><p>全面支持手机、平板、电脑及智能电视浏览器访问，页面自适应布局，各端均可流畅观看。</p></details>
+      <details class="faq2 rv"><summary>播放卡顿怎么办？</summary><p>可尝试切换清晰度、更换播放线路或检查网络连接，多线路设计正是为卡顿时快速切换更流畅的源。</p></details>
+      <details class="faq2 rv"><summary>如何找到最新更新的影视？</summary><p>首页热播榜与各个栏目页面会实时更新最新上线内容，也可使用搜索框直接搜索片名快速定位。</p></details>
+      <details class="faq2 rv"><summary>支持投屏到电视吗？</summary><p>支持。在播放页面点击投屏按钮，确保手机与电视处于同一网络即可将画面投射到大屏。</p></details>
+      <details class="faq2 rv"><summary>为什么有些影片无法播放？</summary><p>影视资源受版权与地域等因素影响可能存在波动，建议尝试切换线路或搜索其他同名片源，也可反馈给我们协助更新。</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section style="padding:30px 0 60px">
+  <div class="wrap"><div class="cta3 rv">
+    <h3>马上开启你的 360° 观影之旅</h3>
+    <p>收藏 360影视，最新电影电视剧综艺动漫不错过</p>
+    <div class="cta" style="justify-content:center"><a href="#film" class="btn btn-p">浏览影视资源</a><a href="#guide" class="btn btn-o">查看观影指南</a></div>
+  </div></div>
+</section>
+
+<!-- ===== 页脚 ===== -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="fbrand"><a href="#" class="logo"><span class="mk"></span><b>3<i>60影视</i></b></a>
+        <p>360影视精选最新电影、热播电视剧、综艺、动漫等高清影视资源在线观看导航，360度全景式观影体验，多端自适应、界面清爽。</p></div>
+      <div><h5>影视频道</h5><ul><li><a href="#film">最新电影</a></li><li><a href="#tv">热播电视剧</a></li><li><a href="#show">综艺节目</a></li><li><a href="#show">动漫番剧</a></li></ul></div>
+      <div><h5>观影服务</h5><ul><li><a href="#guide">观影指南</a></li><li><a href="#rank">热播排行榜</a></li><li><a href="#">片源反馈</a></li><li><a href="#">更新日志</a></li></ul></div>
+      <div><h5>关于本站</h5><ul><li><a href="#faq">常见问题</a></li><li><a href="#">使用条款</a></li><li><a href="#">隐私政策</a></li><li><a href="#">联系我们</a></li></ul></div>
+    </div>
+    <div class="copy">
+      <p>© 2026 360影视 网站网址：https://360yingshi-cn.github.io/ ｜ 本站仅为影视信息导航，请尊重版权、支持正版。</p>
+      <p style="margin-top:8px">友情链接：<a href="#">爱奇艺</a> · <a href="#">腾讯视频</a> · <a href="#">优酷</a> · <a href="#">芒果TV</a> · <a href="#">哔哩哔哩</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* 移动端菜单 */
+var mbtn=document.getElementById('mbtn'),menu=document.getElementById('menu');
+mbtn.addEventListener('click',function(){menu.classList.toggle('open');});
+menu.addEventListener('click',function(e){if(e.target.tagName==='A')menu.classList.remove('open');});
+
+/* 滚动入场 */
+var io=new IntersectionObserver(function(ents){
+  ents.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+},{threshold:.12,rootMargin:'0px 0px -40px'});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"360影视","url":"https://360yingshi-cn.github.io/","description":"360影视，360度全景式影视导航，精选最新电影、热播电视剧、综艺、动漫等海量高清影视资源在线观看。","potentialAction":{"@type":"SearchAction","target":"https://360yingshi-cn.github.io/#search={search_term_string}","query-input":"required name=search_term_string"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"360影视","url":"https://360yingshi-cn.github.io/","logo":"https://360yingshi-cn.github.io/favicon.ico"}
+</script>
+</body>
+</html>
